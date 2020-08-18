@@ -11,7 +11,12 @@ curl -O https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-3.4.2.tgz
 tar -zxvf mongodb-linux-x86_64-3.0.6.tgz    
 mv mongodb-linux-x86_64-3.4.2/ /usr/local/mongodb
 
-4.部署配置文件
+4.环境变量配置
+￼[root@mongo ~]# vi /etc/profile
+export MONGO_HOME=/root/mongodb-linux-x86_64-2.6.7 
+export PATH=$PATH:$MONGO_HOME/bin
+
+5.部署配置文件
 主节点：mongodb_master.conf
 #master.conf
 dbpath=/usr/local/mongodb/data
@@ -51,7 +56,7 @@ oplogSize=100
 fork=true
 noprealloc=true
 
-5.参数说明
+6.参数说明
 --quiet     # 安静输出
 --port arg  # 指定服务端口号，默认端口27017
 --bind_ip arg   # 绑定服务IP，若绑定127.0.0.1，则只能本机访问，不指定默认本地所有IP
