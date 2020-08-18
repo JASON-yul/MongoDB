@@ -108,6 +108,8 @@ noprealloc=true
 ./mongod -f /etc/mongodb_slave.conf
 ./mongod -f /etc/mongodb_arbiter.conf
 
+如果不是集群单节点启动可以用命令：/usr/local/mongodb/bin/mongod --dbpath=/usr/local/mongodb/data --logpath=/usr/local/mongodb/logs/mongodb.log --fork
+
 三、就需要配置主、备、仲裁节点了。首先我们选择一台服务器进行连接
 ./mongo 
 或是./mongo 10.100.1.101:27017 
