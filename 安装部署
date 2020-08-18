@@ -34,7 +34,7 @@ noprealloc=true
 #slave.conf
 dbpath=/usr/local/mongodb/data
 logpath=/usr/local/mongodb/logs/mongodb.log
-pidfilepath=/usr/local/mongodb/master.pid
+pidfilepath=/usr/local/mongodb/slave.pid
 directoryperdb=true
 logappend=true
 replSet=testdb
@@ -47,7 +47,7 @@ noprealloc=true
 #arbiter.conf
 dbpath=/usr/local/mongodb/data
 logpath=/usr/local/mongodb/logs/mongodb.log
-pidfilepath=/usr/local/mongodb/master.pid
+pidfilepath=/usr/local/mongodb/arbiter.pid
 directoryperdb=true
 logappend=true
 replSet=testdb
