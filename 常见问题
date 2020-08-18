@@ -1,0 +1,8 @@
+1.重启失败：./bin/mongod -f mongodb_master.conf
+
+报错：about to fork child process, waiting until server is ready for connections.
+forked process: 5624
+ERROR: child process failed, exited with error number 100
+To see additional information in this output, start without the "--fork" option.
+
+解决方案：需删除进程及conf、data、logs下的内容
