@@ -1,5 +1,5 @@
 注:导入导出前先确保数据库的用户和密码存在
-创建用户（多数据库授权）：
+一、创建用户（多数据库授权）：
 use db
 db.createUser( { user: "read", pwd: "read","roles" : [ { "role" : "read", "db" : "cicloud" }, { "role" : "read", "db" : "cicloud-container" }, { "role" : "read", "db" : "cicloud-report" } ] } )
 
@@ -29,3 +29,58 @@ root：只在admin数据库中可用。超级账号，超级权限
 db.changeUserPassword("suq", "111111")
 
 注：分片集群创建用户时需要先连接到mongos创建，创建完成后，再连接到分片主节点中创建用户。
+
+二、数据导入、导出命令mongoexport
+Mongodb中的mongoexport工具可以把一个collection导出成JSON格式或CSV格式的文件。
+可以通过参数指定导出的数据项，也可以根据指定的条件导出数据。
+mongoexport具体用法如下:
+
+查看帮助
+/bin/mongoexport --help  
+
+参数说明：
+-h:指明数据库宿主机的IP
+-u:指明数据库的用户名
+-p:指明数据库的密码
+-d:指明数据库的名字
+-c:指明collection(集合)的名字
+--type: 指明输出的格式,默认为json
+-f:指明要导出列(如果--type为csv，则需要加上-f "字段名")
+-o:指明到要导出的文件名
+-q:指明导出数据的过滤条件(以json字符串作为查询条件)
+
+实例(导出json格式-默认输出为json格式)：
+/bin/mongoexport -h x.x.x.x:27017 -d online -c logs --type json -o /data/logs.json
+
+实例2（导出指定列的json格式-- -f命令指定导出列,中间用逗号分隔）
+mongoexport -h 10.3.0.242:27117 -d testdb -c logs -f tags,id --type=json -o file.json
+
+实例3（导出CSV格式,务必指定需要导出的字段）：
+/bin/mongoexport -h x.x.x.x:27017 -d test -c students --type csv -f classid,name,age -o /data/students_csv.csv  
+数据导入命令mongoimport
+语法：
+mongoimport -d dbname -c collectionname --file filename --headerline --type json/csv -f field
+参数说明：
+-h:指明数据库宿主机的IP
+-u:指明数据库的用户名
+-p:指明数据库的密码
+-d: 数据库名
+-c: collection
+--type: 导入的格式默认json
+-f ：导入的字段名
+--headerline ：如果导入的格式是csv，则可以使用第一行的标题作为导入的字段
+--file ：要导入的文件
+
+三、备份恢复命令mongodump做备份，mongorestore做恢复（与上导入导出原理相同，可批量执行）
+1.mongodump备份数据：
+mongodump -urdsAdmin -p --authenticationDatabase admin --host url -d hcop_db --gzip -o /szxnas/hcopdb
+注：-u：数据库名称
+    -p：数据密码
+    --authenticationDatabase admin：操作者是管理员才使用
+    --host：远程数据库主机（可写域名）ip：端口
+    -d：数据库名称（要导出数据的数据库）
+    -o：导出到当前主机路径
+2.mongorestore恢复数据：
+mongorestore -urdsAdmin -p --authenticationDatabase admin --host url -d hcop_db --gzip  /szxnas/hcopdb
+
+注：若在本地执行mongorestore -d db_name 要导入的文件夹目录
