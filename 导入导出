@@ -78,7 +78,7 @@ mongodump -urdsAdmin -p --authenticationDatabase admin --host url -d hcop_db --g
     -p：数据密码
     --authenticationDatabase admin：操作者是管理员才使用
     --host：远程数据库主机（可写域名）ip：端口
-    -d：数据库名称（要导出数据的数据库）
+    -d：数据库名称（要导出数据的数据库，链名）
     -o：导出到当前主机路径
 2.mongorestore恢复数据：
 mongorestore -urdsAdmin -p --authenticationDatabase admin --host url -d hcop_db --gzip  /szxnas/hcopdb
